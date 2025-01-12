@@ -41,11 +41,11 @@ def Generate_Movies_Series():   #wypełnienie biblioteki filmów danymi
     series4 = Series(title="Czarnobyl", year=2019, genre="Dramat", season_number=1, episode_number=4)
     Library = [movie1, series1, series2, series3, series4]
     #tworzenie filmów i dodanie do listy
-    for i in range(1,5):
+    for i in range(1,50):
         movie = Movie(title=fake.bs().title(), year=randint(1950,2025), genre=random.choice(MovieGenres))
         Library.append(movie)
     #tworzenie seriali i dodanie do listy
-    for i in range(1,3):   #liczba seriali
+    for i in range(1,30):   #liczba seriali
         jj = randint(1,8)   #liczba sezonów
         kk = randint(6,12)    #liczba odcinków w sezonie
         title_temp=fake.bs().title()
@@ -57,11 +57,31 @@ def Generate_Movies_Series():   #wypełnienie biblioteki filmów danymi
                 Library.append(series)
     return Library
 
-LibraryMovies = Generate_Movies_Series()
-for movie_series in LibraryMovies:
+def get_movies(LibraryAll):
+    LibraryMovies = []
+    for movie in LibraryAll:
+        if movie.type == "movie":
+            LibraryMovies.append(movie)
+    movies_by_title = sorted(LibraryMovies, key=lambda Movie: Movie.title)
+    print("\nFilmy pełnometrażowe w naszej bibliotece posortowane według tytułu:")
+    for movie in movies_by_title:
+        print(movie)
+    return LibraryMovies
+
+def get_series(LibraryAll):
+    LibrarySeries = []
+    for series in LibraryAll:
+        if series.type == "series":
+            LibrarySeries.append(series)
+    series_by_title=sorted(LibrarySeries, key=lambda Series: Series.title)
+    print("\nSeriale w naszej bibliotece posortowane według tytułu:")
+    for series in series_by_title:
+        print(series)
+    return LibrarySeries
+
+LibraryMoviesSeries = Generate_Movies_Series()  #wypełnienie biblioteki
+for movie_series in LibraryMoviesSeries:        #wyświetlenie biblioteki
     print(movie_series)
-print(LibraryMovies[3].watch_counts)
-LibraryMovies[3].play()
-print(LibraryMovies[3].watch_counts)
 
-
+get_movies(LibraryMoviesSeries)     #wyświetlenie filmów alfabetycznie
+get_series(LibraryMoviesSeries)     #wyświetlenie seriali alfabetycznie
