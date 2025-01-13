@@ -1,3 +1,10 @@
+"""
+Napisz funkcję search, która wyszukuje film lub serial po jego tytule.
+Napisz funkcję generate_views, która losowo wybiera element z biblioteki, a następnie dodaje mu losową (z zakresu od 1 do 100) ilość odtworzeń.
+Napisz funkcję, która uruchomi generate_views 10 razy.
+Napisz funkcję top_titles(), która zwróci wybraną ilość najpopularniejszych tytułów z biblioteki. 
+"""
+
 from random import *
 import random
 from faker import Faker
@@ -46,8 +53,8 @@ def Generate_Movies_Series():   #wypełnienie biblioteki filmów danymi
         Library.append(movie)
     #tworzenie seriali i dodanie do listy
     for i in range(1,30):   #liczba seriali
-        jj = randint(1,8)   #liczba sezonów
-        kk = randint(6,12)    #liczba odcinków w sezonie
+        jj = randint(1,8)   #losowa liczba sezonów
+        kk = randint(6,12)    #losowa liczba odcinków w sezonie, w każdym sezonie taka sama liczba odcinków
         title_temp=fake.bs().title()
         year_temp = randint(1980,2025)
         genre_temp = random.choice(MovieGenres)
@@ -79,9 +86,34 @@ def get_series(LibraryAll):
         print(series)
     return LibrarySeries
 
+def search(LibraryAll):
+    search_title_list = []
+    search_title=input("Podaj tytuł, który chcesz znaleźć:")
+    print("Znalezione pozycje: ")
+    for movie_series in LibraryAll:
+        if search_title == movie_series.title:
+            print(movie_series)
+            search_title_list.append(movie_series)
+    return search_title_list
+
+def generate_view(LibraryAll):
+    random_movie = randint(0, len(LibraryAll))
+    print(f"Losowy film: {LibraryAll[random_movie]}, pooglądano {LibraryAll[random_movie].watch_counts} razy")
+    LibraryAll[random_movie].watch_counts += randint(1,100)
+    print(f"Losowy film {LibraryAll[random_movie]} po funkcji 'generate_view' pooglądano: {LibraryAll[random_movie].watch_counts} razy")
+
+def generate_view_x10(LibraryAll):
+    for i in range(0,10):
+        generate_view(LibraryAll)
+
 LibraryMoviesSeries = Generate_Movies_Series()  #wypełnienie biblioteki
 for movie_series in LibraryMoviesSeries:        #wyświetlenie biblioteki
     print(movie_series)
 
 get_movies(LibraryMoviesSeries)     #wyświetlenie filmów alfabetycznie
 get_series(LibraryMoviesSeries)     #wyświetlenie seriali alfabetycznie
+search(LibraryMoviesSeries)    #wyszukiwanie filmu po nazwie
+generate_view_x10(LibraryMoviesSeries)
+generate_view_x10(LibraryMoviesSeries)
+
+
