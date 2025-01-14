@@ -122,6 +122,5 @@ get_series(LibraryMoviesSeries)     #wyświetlenie seriali alfabetycznie
 #search(LibraryMoviesSeries)    #wyszukiwanie filmu po nazwie
 generate_view_x10(LibraryMoviesSeries)
 generate_view_x10(LibraryMoviesSeries)
-
 top_titles(LibraryMoviesSeries)
 
